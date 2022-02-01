@@ -1,0 +1,73 @@
+.container_wrapper{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 120px;
+}
+
+.viagens{
+
+  width: 100%;
+
+  padding: 10px;
+  border-bottom: 1px solid red;
+}
+
+.planejamento{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.planejamento img{
+  width: 400px;
+  filter: drop-shadow(0px 0px 5px #838485);
+
+}
+
+.cartao_planejamento{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 250px;
+  padding: 30px;
+
+  box-shadow: 0 0 30px #838485;
+  border-radius: 25px;
+}
+
+.cartao_planejamento h4{
+  text-align: left;
+}
+
+.cartao_planejamento a{
+  border-radius: 25px;
+  border: 1px solid #0E153C;
+  box-shadow: 0 0 5px #0E153C;
+
+  color: #eee;
+  background: #132794;
+
+  text-align: center;
+  font-weight: bold;
+  list-style: none;
+  text-decoration: none;
+
+  padding: 2px;
+  transition: .4s;
+}
+
+.cartao_planejamento a:hover{
+  filter: brightness(1.1);
+  text-shadow: 0 0 5px #fff;
+  transform: scale(1.1);
+  perspective: 1000;
+}
+
+.form{
+  margin-top: 200px;
+}
+

@@ -1,5 +1,12 @@
 import React from 'react';
 import styles from './style.module.css';
+import {
+  Facebook,
+  GitHub,
+  Instagram,
+  LinkedIn,
+  WhatsApp
+} from '@mui/icons-material';
 
 
 export const Footer = () => {
@@ -9,27 +16,27 @@ export const Footer = () => {
       <ul>
         <li>
           <a href="https://github.com/Lucas-Braz7x">
-            <img src="./assets/github.svg" alt="Link para o github" />
+            <GitHub sx={{ color: "#000" }} />
           </a>
         </li>
         <li>
           <a href="https://www.linkedin.com/in/lucas-braz-dutra">
-            <img src="./assets/linkedin.svg" alt="Link para o linkedin" />
+            <LinkedIn sx={{ color: "#0e76a8" }} />
           </a>
         </li>
         <li>
           <a href="https://www.instagram.com/tchubiross/">
-            <img src="./assets/instagram.svg" alt="Link para o instagram" />
+            <Instagram sx={{ color: "#dd2a7b" }} />
           </a>
         </li>
         <li>
           <a href="#">
-            <img src="./assets/facebook.svg" alt="Link para o facebook" />
+            <Facebook sx={{ color: "#3b5999" }} />
           </a>
         </li>
         <li>
           <a href="#">
-            <img src="./assets/whatsapp.svg" alt="Link para o whatsapp" />
+            <WhatsApp sx={{ color: "#00bb2d" }} />
           </a>
         </li>
       </ul>

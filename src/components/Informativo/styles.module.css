@@ -1,0 +1,33 @@
+
+.viagens{
+  width: 100%;
+  margin: -50px 0 10px 0;
+}
+
+.planejamento{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.planejamento img{
+  width: 400px;
+  filter: drop-shadow(0px 0px 5px #838485);
+
+}
+
+.cartao_planejamento{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 250px;
+  padding: 30px;
+
+  box-shadow: 0 0 30px #838485;
+  border-radius: 25px;
+}
+
+.cartao_planejamento h4{
+  text-align: left;
+}

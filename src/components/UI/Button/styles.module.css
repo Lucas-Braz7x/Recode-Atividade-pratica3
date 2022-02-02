@@ -1,0 +1,23 @@
+.button{
+  border-radius: 25px;
+  border: 1px solid #0E153C;
+  box-shadow: 0 0 5px #0E153C;
+
+  color: #eee;
+  background: #132794;
+
+  text-align: center;
+  font-weight: bold;
+  list-style: none;
+  text-decoration: none;
+
+  padding: 2px 5px;
+  transition: .4s;
+}
+
+.button:hover{
+  filter: brightness(1.1);
+  text-shadow: 0 0 5px #fff;
+  transform: scale(1.1);
+  perspective: 1000;
+}

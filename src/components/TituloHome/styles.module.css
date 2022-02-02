@@ -1,0 +1,11 @@
+.titulo{
+  font-size: 40px;
+  color: #0e153c;
+}
+
+.sub_titulo{
+  display: inline-block;
+  font-size: 20px;
+  letter-spacing: .25px;
+  color: #0e153c;
+}

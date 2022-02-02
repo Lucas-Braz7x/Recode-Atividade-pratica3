@@ -19,10 +19,10 @@ export const Informativo = () => {
           <span>Deixe a parte burocrática com a gente
             e tenha foco no seu momento de lazer.
           </span>
-          <Link to="/promocoes">
+          <Link to="/viagens">
             <Button>
 
-              Confira nossas promoções
+              Confira nossas viagens
             </Button></Link>
         </div>
       </section>

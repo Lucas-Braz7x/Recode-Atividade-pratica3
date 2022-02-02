@@ -13,7 +13,7 @@ export const Header = () => {
         <ul className={styles.menu_opcoes}>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/destino'>Passagens</Link></li>
-          <li><Link to='/destino'>Promoções</Link></li>
+          <li><Link to='/viagem'>Viagens</Link></li>
           <li><Link to='/destino'>Contatos</Link></li>
           <li><Link to='/#'>Usuario</Link></li>
           <li><ShoppingCart sx={{ color: "#ffffff" }} /></li>

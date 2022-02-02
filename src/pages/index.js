@@ -1,3 +1,3 @@
 export { Home } from './Home';
-export { Destino } from './Destino';
+export { Viagem } from './Viagem';
 //export { Container } from './Container';

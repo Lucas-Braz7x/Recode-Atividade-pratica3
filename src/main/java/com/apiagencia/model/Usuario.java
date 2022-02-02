@@ -28,6 +28,4 @@ public class Usuario {
 	@Column(nullable=false, length=11, unique = true)
 	private String cpf;
 	
-	@Column(nullable = false)
-	private int idade;
 }

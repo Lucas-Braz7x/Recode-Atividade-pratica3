@@ -6,26 +6,44 @@ import imgBannerAdventure from '../../assets/adventure.svg';
 import { Search, Add } from '@mui/icons-material';
 import { getData } from '../../utils';
 import { NotFoundElement } from '../../components/UI/NotFoundElement';
-import { Card } from '../../components';
+import { Card, Modal, FormularioViagem } from '../../components';
 
 export const Viagem = () => {
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [modalOpened, setModalOpened] = useState(false);
+  const [updateEffect, setUpdateEffect] = useState(false);
+  const [id, setId] = useState(null);
   useEffect(() => {
     getData('viagem', handleData);
-  }, []);
+  }, [updateEffect]);
+
   useEffect(() => {
     handleFilter(data);
+    console.log(updateEffect)
   }, [data])
 
+  useEffect(() => {
+    //Por num effect
+    const filterPosts = inputValue
+      ? filterData.filter((viagem) => {
+        return viagem.destinoViagem.toLowerCase().includes(inputValue.toLowerCase());
+      })
+      : data;
+    handleFilter(filterPosts);
+  }, [inputValue])
 
   const handleData = prop => setData(() => prop);
+  const handleClose = () => {
+    setModalOpened(!modalOpened);
+    setId(null);
+  }
   const handleFilter = async prop => await setFilterData(() => prop);
-
-  if (inputValue.length > 0 && data.length > 0) {
-    const newFilterData = filterData.filter(inputFilter => inputFilter.destinoViagem == inputValue)
-    setFilterData(newFilterData);
+  const handleUpdate = () => setUpdateEffect(!updateEffect);
+  const handleOpenModal = (id) => {
+    setModalOpened(true);
+    setId(id);
   }
 
   return (
@@ -42,10 +60,14 @@ export const Viagem = () => {
           </div>
         </div>
       </section>
-      {data.length === 0 ? <NotFoundElement /> :
+      {filterData.length === 0 ? <NotFoundElement /> :
         <div className={styles.cardContainer}>
           {filterData.map((viagem, indice) => (
-            <Card key={indice} viagem={viagem} />
+            <Card
+              key={indice}
+              openModal={handleOpenModal}
+              handleUpdate={handleUpdate}
+              viagem={viagem} />
           ))}
         </div>}
 
@@ -53,9 +75,21 @@ export const Viagem = () => {
         <Add
           color='success'
           alt='Adicionar viagem'
-          onClick={() => alert('Clicado')}
+          onClick={() => { setModalOpened(true) }}
         />
       </div>
+
+      <Modal
+        open={modalOpened}
+        onClose={handleClose}
+      >
+        {modalOpened && <FormularioViagem
+          id={id ? id : undefined}
+          onClose={handleClose}
+          handleUpdate={handleUpdate} />}
+      </Modal>
+
+
     </>
   )
 }

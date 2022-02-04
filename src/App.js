@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, Viagem } from './pages';
+import { Home, Passagens, Viagem } from './pages';
 import { Header, Footer, Container, Content } from './layout';
 import './styles/Global.css';
 
@@ -13,6 +13,7 @@ const App = () => {
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<Viagem />} path="/viagem" />
+            <Route element={<Passagens />} path="/passagens" />
           </Routes>
         </Content>
         <Footer />

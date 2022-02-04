@@ -15,6 +15,11 @@ export const getData = async (rota, setEstado) => {
     })
 }
 
+export const deleteData = async (rota, id) => {
+  await api.delete(`/${rota}/${id}`);
+}
+
+
 
 //Função que pega os dados da api
 /*const pegarDados = () => {

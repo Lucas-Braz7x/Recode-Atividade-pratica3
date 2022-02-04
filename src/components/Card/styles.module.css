@@ -1,6 +1,6 @@
-
 .card{
-  width: 150px;
+  position: relative;
+  width: 180px;
   height: 120px;
 
   display: flex;
@@ -16,4 +16,39 @@
 
 .card:hover{
   transform: scale(.9);
+}
+
+.emitir_passagem{
+  position: absolute;
+  top: 2px;
+  right: 5px;
+
+  cursor: pointer;
+}
+
+.icones{
+  position: absolute;
+  display: flex;
+
+  bottom: 2px;
+}
+
+.emitir_passagem a,
+.icones svg{
+  color: #776eff;
+  transition: filter .3s, color .3s;
+}
+
+.emitir_passagem a:hover,
+.icones svg:hover{
+  filter: brightness(1.1);
+  cursor: pointer;
+  color: #0e153c;
+}
+
+.sr_only{
+  position: absolute;
+  top: -10000px;
+  left: -10000px;
+  opacity: 0;
 }

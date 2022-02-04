@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
 
 import { ErrorMessage, Field, Form, Formik } from 'formik';
@@ -8,22 +8,35 @@ import { api } from '../../service/api';
 
 
 /*eslint-disable */
-export const FormularioViagem = ({ id }) => {
-  const [formValue, setFormValue] = useState({});
+export const FormularioViagem = ({ id, onClose, handleUpdate }) => {
 
-  const handleSubmit = value => {
+  const handleSubmit = (value, id) => {
     console.log(value);
-    setFormValue(value);
     try {
-      handleSave(formValue)
+      if (id > 0) {
+        handleUpdate(value, id)
+      } else {
+        handleSave(value);
+      }
+      handleUpdate();
+      alert("Viagem cadastrada");
+      onClose();
     } catch (error) {
       console.log(error);
     }
-    alert("Viagem cadastrada");
   }
 
   const handleSave = async (value) => {
     await api.post("/viagem", {
+      "destinoViagem": value.destinoViagem,
+      "preco": parseFloat(value.preco),
+      "taxas": parseFloat(value.taxas)
+    })
+  }
+
+  const handleUpdateViagem = async (value, id) => {
+    await api.put("/viagem", {
+      "id": id,
       "destinoViagem": value.destinoViagem,
       "preco": parseFloat(value.preco),
       "taxas": parseFloat(value.taxas)
@@ -57,6 +70,7 @@ export const FormularioViagem = ({ id }) => {
           <Field placeholder="Taxas" name="taxas" />
           <ErrorMessage name='taxas' />
         </div>
+        {console.log(id)}
         {id !== null, id !== undefined &&
 
           <div className={styles.grupo_formulario}>

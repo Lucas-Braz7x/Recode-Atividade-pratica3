@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 
 import animationData from '../../assets/animation/travelling-animation.json';
@@ -13,9 +13,12 @@ export const Home = () => {
   const [loading, setLoading] = useState(true);
 
 
-  setInterval(() => {
-    setLoading(false);
-  }, 2000);
+  useEffect(() => {
+    setInterval(() => {
+      setLoading(false);
+    }, 2000);
+  }, [])
+
 
 
   return (

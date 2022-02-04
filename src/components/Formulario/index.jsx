@@ -3,12 +3,28 @@ import styles from './styles.module.css';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import { Button } from '..';
+import { api } from '../../service/api';
+
 
 export const Formulario = () => {
   const handleSubmit = value => {
     console.log(value);
-    alert(value.nome);
+    const cpf = value.cpf.replace(/[^0-9]/g, '')//Qualquer caracter não numérico
+    value.cpf = cpf;
+    handleSave(value)
+    alert(value.cpf);
   }
+
+  const handleSave = async (value) => {
+    await api.post("/usuario", {
+      "nome": value.nome,
+      "email": value.email,
+      "telefone": value.telefone,
+      "cpf": value.cpf
+    })
+  }
+
+
   const validations = yup.object().shape({
     nome: yup.string().min(3).required(),
     email: yup.string().email().required(),

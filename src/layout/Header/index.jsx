@@ -12,7 +12,7 @@ export const Header = () => {
         </div>
         <ul className={styles.menu_opcoes}>
           <li><Link to='/'>Home</Link></li>
-          <li><Link to='/destino'>Passagens</Link></li>
+          <li><Link to='/passagens'>Passagens</Link></li>
           <li><Link to='/viagem'>Viagens</Link></li>
           <li><Link to='/destino'>Contatos</Link></li>
           <li><Link to='/#'>Usuario</Link></li>

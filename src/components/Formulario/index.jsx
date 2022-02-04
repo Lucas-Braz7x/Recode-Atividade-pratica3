@@ -9,7 +9,7 @@ import { api } from '../../service/api';
 export const Formulario = () => {
   const handleSubmit = value => {
     console.log(value);
-    const cpf = value.cpf.replace(/[^0-9]/g, '')//Qualquer caracter não numérico
+    const cpf = value.cpf.replace(/[^0-9]/g, '')//Qualquer caractere não numérico
     value.cpf = cpf;
     handleSave(value)
     alert(value.cpf);

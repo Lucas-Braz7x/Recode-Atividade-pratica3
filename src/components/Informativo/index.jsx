@@ -19,7 +19,7 @@ export const Informativo = () => {
           <span>Deixe a parte burocrática com a gente
             e tenha foco no seu momento de lazer.
           </span>
-          <Link to="/viagens">
+          <Link to="/viagem">
             <Button>
 
               Confira nossas viagens

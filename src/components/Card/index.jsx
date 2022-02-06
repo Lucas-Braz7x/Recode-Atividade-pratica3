@@ -3,8 +3,8 @@ import { ArrowForwardRounded, Refresh, RemoveCircle } from '@mui/icons-material'
 import { deleteData } from '../../utils';
 import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
+import * as P from 'prop-types';
 
-/*eslint-disable */
 export const Card = ({ viagem, handleUpdate, openModal }) => {
   const handleDelete = (id) => {
     if (confirm('deseja excluir?')) {
@@ -36,4 +36,10 @@ export const Card = ({ viagem, handleUpdate, openModal }) => {
       </div>
     </div>
   )
+}
+
+Card.propTypes = {
+  viagem: P.object.isRequired,
+  handleUpdate: P.func.isRequired,
+  openModal: P.func.isRequired
 }

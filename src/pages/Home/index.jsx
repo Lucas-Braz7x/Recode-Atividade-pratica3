@@ -7,7 +7,6 @@ import Lottie from 'lottie-react';
 import { BallTriangle } from 'react-loader-spinner';
 
 import { Formulario, Informativo, TituloHome } from '../../components';
-//import { Link } from 'react-router-dom';
 
 export const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -16,7 +15,7 @@ export const Home = () => {
   useEffect(() => {
     setInterval(() => {
       setLoading(false);
-    }, 2000);
+    }, 1500);
   }, [])
 
 
@@ -33,7 +32,7 @@ export const Home = () => {
             loop={true}
           />
           <Informativo />
-          <Formulario />
+          <Formulario id={null} />
         </>
       }
     </>

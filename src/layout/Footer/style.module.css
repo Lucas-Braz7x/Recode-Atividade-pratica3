@@ -13,6 +13,7 @@
 
   box-shadow: 0 0 30px #838485;
   background: #eeeeee;
+
 }
 
 .footer li{
@@ -28,4 +29,12 @@
   list-style: none;
   display: flex;
   gap: 25px;
+}
+
+@media (max-width: 400px) {
+  .footer{
+    flex-direction: column;
+    gap: 15px;
+    font-size: 14px;
+  }
 }

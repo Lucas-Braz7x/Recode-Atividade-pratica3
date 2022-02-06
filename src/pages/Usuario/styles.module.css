@@ -1,0 +1,80 @@
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 120px;
+
+}
+
+.icones{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 150px;
+  height: 30px;
+  color: #6c63ff;
+  background: #dcd9f3;
+}
+
+.icones > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50px;
+}
+
+.activeIcon{
+  background: #cbc7e2;
+}
+
+.cardContainer{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  max-width: 80%;
+  min-width: 190px;
+  width: auto;
+  margin: 20px 0;
+}
+
+.cardUsuario{
+  box-shadow: 0 0 3px #707070;
+  width: auto;
+  height: 150px;
+
+  padding: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.iconesCard{
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 150px;
+  color: #6c63ff;
+  background: #dcd9f3;
+  width: 100%;
+  cursor: pointer;
+}
+
+.aviso{
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: rgb(194, 194, 11);
+}
+
+@media (max-width: 400px) {
+  .cardUsuario{
+    height: 125px;
+  }
+}

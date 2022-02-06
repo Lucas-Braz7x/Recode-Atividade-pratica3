@@ -10,7 +10,7 @@ export const Formulario = ({ id, usuario }) => {
   const handleSubmit = value => {
     const cpf = value.cpf.replace(/[^0-9]/g, '')//Qualquer caractere não numérico
     value.cpf = cpf;
-
+    console.log(value)
     try {
 
       if (id > 0) {

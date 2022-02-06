@@ -17,7 +17,7 @@ export const Usuario = () => {
   useEffect(() => {
     getData('usuario', setUsuarios);
     getData('passagem', setPassagens);
-  }, [updateEffect])
+  }, [activeIcon, updateEffect])
 
 
   useEffect(() => {

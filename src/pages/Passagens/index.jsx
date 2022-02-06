@@ -106,6 +106,7 @@ export const Passagens = () => {
               <p>Preço: R${passagem.viagem.preco}</p>
               <div onClick={() => {
                 deleteData('passagem', passagem.id)
+                setUpdateEffect(!updateEffect)
               }} className={styles.icones}>
                 <Remove />
               </div>

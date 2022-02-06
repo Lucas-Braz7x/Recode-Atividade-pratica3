@@ -1,14 +1,15 @@
-import { ShoppingCart } from '@mui/icons-material';
+import { Remove, ShoppingCart } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { NotFoundElement } from '../../components';
-import { getData } from '../../utils';
+import { deleteData, getData } from '../../utils';
 import styles from './styles.module.css';
 
 export const Passagens = () => {
   const [passagens, setPassagens] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [viagens, setViagens] = useState([]);
-  const [selectValue, setSelectValue] = useState({});
+  const [updateEffect, setUpdateEffect] = useState(false);
 
   useEffect(() => {
     try {
@@ -18,23 +19,45 @@ export const Passagens = () => {
     } catch (error) {
       console.log(error);
     }
-
   }, []);
+
+
+  useEffect(() => {
+    try {
+      getData('passagem', handleData);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [updateEffect]);
+
+  const dispatch = useDispatch();
+  const addCart = (usuario, viagem) => {
+    dispatch({ type: 'ADD_PASSAGEM', usuario: usuario, viagem: viagem });
+  }
 
   const handleData = prop => setPassagens(() => prop);
   const handleUsers = prop => setUsuarios(() => prop);
   const handleTravels = prop => setViagens(() => prop);
+
   const handleSelectValue = async () => {
+
+    setUpdateEffect(!updateEffect);
+
     const viagem = await document.getElementById('viagem');
     const usuario = await document.getElementById('usuario');
 
-    if (viagem || usuario) {
-      await setSelectValue({
-        "viagem": viagem.value,
-        "usuario": usuario.value
+    if (viagem.value && usuario.value) {
+      const viagemAtual = viagem.value.split('-');
+      const filterViagem = viagens.filter((viagem) => {
+        return viagem.destinoViagem === viagemAtual[0]
       })
 
-      console.log(selectValue)
+      const usuarioAtual = usuario.value.split('-');
+      const filterUsuario = usuarios.filter((usuario) => {
+        return usuario.nome === usuarioAtual[0]
+      })
+
+      addCart(filterUsuario[0], filterViagem[0]);
       alert("Viagem: " + viagem.value + " Usuario: " + usuario.value)
       viagem.value = '';
       usuario.value = '';
@@ -71,13 +94,25 @@ export const Passagens = () => {
           <ShoppingCart sx={{ color: "#6c63ff" }} />
         </div>
       </div>
-      {passagens.length === 0 ? <NotFoundElement /> :
 
-        passagens.map((passagem, indice) => (
-          <p key={indice}>{passagem.destinoViagem}</p>
-        ))
-      }
+      <div className={styles.cardContainer}>
+        {passagens.length === 0 ? <NotFoundElement /> :
 
+
+          passagens.map((passagem, indice) => (
+            <div className={styles.cardPassagem} key={indice}>
+              <p >Viagem: {passagem.viagem.destinoViagem}</p>
+              <p>Passageiro: {passagem.usuario.nome}</p>
+              <p>Preço: R${passagem.viagem.preco}</p>
+              <div onClick={() => {
+                deleteData('passagem', passagem.id)
+              }} className={styles.icones}>
+                <Remove />
+              </div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   )
 }

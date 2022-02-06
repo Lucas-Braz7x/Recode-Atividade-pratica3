@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import styles from './styles.module.css';
+import * as P from 'prop-types';
 
 
-/*eslint-disable */
 export const Modal = ({ children, open, onClose }) => {
   useEffect(() => {
     function onEsc(event) {
@@ -32,4 +32,10 @@ export const Modal = ({ children, open, onClose }) => {
       </div>
     </div>
   );
+}
+
+Modal.propTypes = {
+  children: P.node.isRequired,
+  open: P.bool.isRequired,
+  onClose: P.func.isRequired
 }

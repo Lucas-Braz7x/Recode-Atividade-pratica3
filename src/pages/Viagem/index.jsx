@@ -21,7 +21,6 @@ export const Viagem = () => {
 
   useEffect(() => {
     handleFilter(data);
-    console.log(updateEffect)
   }, [data])
 
   useEffect(() => {

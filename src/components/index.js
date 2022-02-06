@@ -6,3 +6,4 @@ export { Card } from './Card';
 export { Button } from './UI/Button';
 export { NotFoundElement } from './UI/NotFoundElement';
 export { Modal } from './UI/Modal';
+export { Cart } from './Cart';

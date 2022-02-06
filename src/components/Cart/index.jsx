@@ -8,7 +8,6 @@ export const Cart = () => {
   const ticketsData = useSelector(state => state.ticketState.data);
   const [tickets, setTicket] = useState(ticketsData);
   const [ticketsLength, setTicketLength] = useState(false);
-  console.log(tickets)
   useEffect(() => {
     setTicket(ticketsData)
   }, [ticketsLength])

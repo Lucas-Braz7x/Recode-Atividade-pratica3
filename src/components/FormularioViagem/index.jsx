@@ -5,18 +5,19 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import { Button } from '..';
 import { api } from '../../service/api';
+import * as P from 'prop-types';
 
-
-/*eslint-disable */
 export const FormularioViagem = ({ id, onClose, handleUpdate }) => {
-
-  const handleSubmit = (value, id) => {
-    console.log(value);
+  const handleSubmit = (value) => {
     try {
+      console.log(id);
+
       if (id > 0) {
-        handleUpdate(value, id)
+        handleUpdateViagem(value, id)
+        console.log('atualiza')
       } else {
         handleSave(value);
+        console.log('salva')
       }
       handleUpdate();
       alert("Viagem cadastrada");
@@ -53,7 +54,7 @@ export const FormularioViagem = ({ id, onClose, handleUpdate }) => {
   return (
     <Formik
       initialValues={{}}
-      onSubmit={handleSubmit}
+      onSubmit={(event) => console.log(event.value), handleSubmit}
       validationSchema={validations}
     >
       <Form className={styles.formulario}>
@@ -70,7 +71,6 @@ export const FormularioViagem = ({ id, onClose, handleUpdate }) => {
           <Field placeholder="Taxas" name="taxas" />
           <ErrorMessage name='taxas' />
         </div>
-        {console.log(id)}
         {id !== null, id !== undefined &&
 
           <div className={styles.grupo_formulario}>
@@ -82,4 +82,10 @@ export const FormularioViagem = ({ id, onClose, handleUpdate }) => {
       </Form>
     </Formik>
   )
+}
+
+FormularioViagem.propTypes = {
+  id: P.number,
+  onClose: P.func.isRequired,
+  handleUpdate: P.func,
 }

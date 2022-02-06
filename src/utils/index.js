@@ -20,7 +20,6 @@ export const deleteData = async (rota, id) => {
 }
 
 
-
 //Função que pega os dados da api
 /*const pegarDados = () => {
   api.get("/pessoas")

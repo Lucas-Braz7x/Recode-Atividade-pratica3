@@ -51,3 +51,57 @@
   filter: brightness(1.1);
   border-bottom: 1px solid #eeeeee;
 }
+
+.disabled{
+  animation: menuClosed forwards 1s;
+  visibility: hidden;
+  display: none;
+}
+
+.menuActive{
+  animation: menuOpened forwards 1s;
+  display: block;
+  visibility: visible;
+}
+
+@keyframes menuOpened {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+@keyframes menuClosed {
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}
+
+@media (max-width: 670px) {
+  .navegacao ul{
+
+    gap: 25px;
+  }
+
+  .navegacao{
+    display: flex;
+    justify-content: flex-end;
+
+  }
+
+  .logo{
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navegacao ul{
+    flex-direction: column-reverse;
+    gap: 5px;
+  }
+}

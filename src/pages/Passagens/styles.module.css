@@ -51,7 +51,7 @@
   max-width: 80%;
   min-width: 190px;
   width: auto;
-  margin: 20px 0;
+  margin: 20px 0 120px 0;
 }
 
 .cardPassagem{
@@ -81,4 +81,10 @@
   border-radius: 50%;
   color: #6c63ff;
   cursor: pointer;
+}
+
+@media (max-width: 470px){
+  .cadastroPassagens{
+    flex-direction: column;
+  }
 }

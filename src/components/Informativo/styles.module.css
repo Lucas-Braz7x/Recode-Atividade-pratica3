@@ -11,9 +11,9 @@
 }
 
 .planejamento img{
-  width: 400px;
+  max-width: 400px;
+  width: auto;
   filter: drop-shadow(0px 0px 5px #838485);
-
 }
 
 .cartao_planejamento{
@@ -30,4 +30,19 @@
 
 .cartao_planejamento h4{
   text-align: left;
+}
+
+@media (max-width: 870px) {
+  .planejamento{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 670px) {
+  .planejamento img{
+    width: 80%;
+  }
 }

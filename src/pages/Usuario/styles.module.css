@@ -4,6 +4,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  margin-bottom: 120px;
+
 }
 
 .icones{
@@ -45,6 +48,7 @@
   height: 125px;
   padding: 5px;
   position: relative;
+  overflow: hidden;
 }
 
 .iconesCard{
@@ -63,7 +67,7 @@
 
 .aviso{
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 2px;
+  right: 2px;
   color: rgb(194, 194, 11);
 }

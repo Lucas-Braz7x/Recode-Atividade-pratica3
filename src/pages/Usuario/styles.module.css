@@ -45,7 +45,8 @@
 .cardUsuario{
   box-shadow: 0 0 3px #707070;
   width: auto;
-  height: 125px;
+  height: 150px;
+
   padding: 5px;
   position: relative;
   overflow: hidden;
@@ -70,4 +71,10 @@
   top: 2px;
   right: 2px;
   color: rgb(194, 194, 11);
+}
+
+@media (max-width: 400px) {
+  .cardUsuario{
+    height: 125px;
+  }
 }

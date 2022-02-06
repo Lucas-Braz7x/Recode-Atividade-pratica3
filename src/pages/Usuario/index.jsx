@@ -90,7 +90,7 @@ export const Usuario = () => {
 
             ))}
           </div>
-          <p>Obs: {<Warning />} Para excluir este usuário
+          <p>Obs: {<Warning />} Para excluir este usuário é preciso
             excluir as passagens emitidas</p>
         </>
       }

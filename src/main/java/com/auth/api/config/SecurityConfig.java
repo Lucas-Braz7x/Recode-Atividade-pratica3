@@ -3,8 +3,6 @@ package com.auth.api.config;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.FilterRegistration;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -26,10 +24,12 @@ import org.springframework.web.filter.CorsFilter;
 import com.auth.api.security.SecurityUserDetailsService;
 import com.auth.api.service.JwtService;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	//Instância as dependências
 	@Autowired
 	private SecurityUserDetailsService userDetailsService;
 	
@@ -73,15 +73,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return encoder;
 	}
 	
+	//Permissões de acesso
+	//Configuração do "cors" com o spring security 
 	@Bean
 	public FilterRegistrationBean<CorsFilter> corsFilter(){
 		List<String> all = Arrays.asList("*");
 		List<String> allOrigins = Arrays.asList("/**", "http://localhost:3000");
 		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowedMethods(all);
-		config.setAllowedOrigins(allOrigins);
-		config.setAllowedHeaders(all);
-		config.setAllowCredentials(true);
+		config.setAllowedMethods(all);//Permite todos os métodos
+		config.setAllowedOrigins(allOrigins);//Permite as origins de acesso
+		config.setAllowedHeaders(all);//Permite todos os headers
+		config.setAllowCredentials(true);//Ativa as credênciais
 		
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration( "/**", config);

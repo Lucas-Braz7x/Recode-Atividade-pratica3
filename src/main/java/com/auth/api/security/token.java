@@ -1,10 +1,10 @@
 package com.auth.api.security;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+//Classe base para gerar o token
 @Getter
 @Setter
 @AllArgsConstructor

@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer{
 
+	//Configuração cors para aplicações sem o spring security
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")

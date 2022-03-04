@@ -13,15 +13,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.auth.api.model.Usuario;
 import com.auth.api.security.SecurityUserDetailsService;
 import com.auth.api.service.JwtService;
 
+//Filtro de requisição (Interceptador)
 public class JwtTokenFilter extends OncePerRequestFilter{
 
 	private SecurityUserDetailsService userDetailsService;
 	private JwtService jwtService;
 
+	//Injeção de recursos 
 	public JwtTokenFilter(JwtService jwtService, 
 			SecurityUserDetailsService userDetailsService) {
 				this.jwtService = jwtService;
@@ -34,12 +35,16 @@ public class JwtTokenFilter extends OncePerRequestFilter{
 			FilterChain filterChain)
 			throws ServletException, IOException {
 		
+		//Pega o header authorization
 		String authorization = request.getHeader("Authorization");
 		
+		//Validação do token
 		if(authorization != null && authorization.startsWith("Bearer")) {
 			String token = authorization.split(" ")[1];
 			boolean isTokenValid = jwtService.isTokenValido(token);
 			
+			//Pega o usuário que autenticou 
+			//Lança este usuário no contexto do spring security
 			if(isTokenValid) {
 				String login = jwtService.obertLoginUsuario(token);
 				UserDetails usuarioAutenticado = userDetailsService.loadUserByUsername(login);
@@ -53,6 +58,8 @@ public class JwtTokenFilter extends OncePerRequestFilter{
 				
 			}
 		}
+		
+		//Dá continuidade à requisição independente do valor
 		filterChain.doFilter(request, response);
 	}
 	

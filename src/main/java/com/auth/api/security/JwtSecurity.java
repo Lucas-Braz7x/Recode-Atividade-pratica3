@@ -20,7 +20,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JwtSecurity implements JwtService {
 
-	@Value("${jwt.expiracao}")
+	@Value("${jwt.expiracao}")//Pega a variável ambiente que está no ".properties"
 	private String expiracao;
 	
 	@Value("${jwt.chave-assinatura}")
@@ -52,6 +52,7 @@ public class JwtSecurity implements JwtService {
 		return token;
 	}
 
+	//Pegas as informações do token
 	@Override
 	public Claims obterClaims(String token) throws ExpiredJwtException {
 		
@@ -61,6 +62,7 @@ public class JwtSecurity implements JwtService {
 						.getBody();
 	}
 
+	//Verifica a validade do token
 	@Override
 	public boolean isTokenValido(String token) {
 		try {
@@ -75,6 +77,7 @@ public class JwtSecurity implements JwtService {
 		}
 	}
 
+	//Pega o usuário logado pelo token
 	@Override
 	public String obertLoginUsuario(String token) {
 		Claims claims = obterClaims(token);

@@ -17,7 +17,7 @@ public class Viagem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length=100)
 	private String destinoViagem;
 	
 	@Column(name="preço", nullable = false)

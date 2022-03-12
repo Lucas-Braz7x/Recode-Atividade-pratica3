@@ -6,4 +6,6 @@ import com.apiagencia.model.Passagem;
 
 public interface PassagemRepository extends JpaRepository<Passagem, Integer> {
 
+	boolean existsById(int id);
+	
 }

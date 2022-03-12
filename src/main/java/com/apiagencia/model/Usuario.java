@@ -19,7 +19,7 @@ public class Usuario {
 	@Column(nullable = false)
 	private String nome;
 	
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 100)
 	private String email;
 	
 	@Column(nullable=false, length=11)
@@ -27,5 +27,11 @@ public class Usuario {
 	
 	@Column(nullable=false, length=11, unique = true)
 	private String cpf;
+	
+	@Column(nullable=false)
+	private String senha;
+	
+	private String imageUrl;
+	
 	
 }

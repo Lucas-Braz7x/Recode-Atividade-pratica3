@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
@@ -17,9 +19,10 @@ public class Passagem {
 	private int id;
 	
 	@ManyToOne
+	@JoinColumn(name="Viagem", nullable = false)
 	private Viagem viagem;
 	
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(name="Usuario", nullable = false)
 	private Usuario usuario;
 }

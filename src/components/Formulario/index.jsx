@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.css';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
@@ -7,11 +7,35 @@ import { api } from '../../service/api';
 import * as P from 'prop-types';
 
 export const Formulario = ({ id, usuario }) => {
+  const [file, setFile] = useState();
+  console.log(file)
+
   const handleSubmit = value => {
     const cpf = value.cpf.replace(/[^0-9]/g, '')//Qualquer caractere não numérico
     value.cpf = cpf;
-    console.log(value)
+
+    const messages = formValidation(value);
+
+    if (messages.length > 0) {
+      messages.map(message => alert(message));
+      return;
+    }
+
     try {
+      const formData = new FormData();
+      if (file) {
+        formData.append("image", file)
+        fetch("https://api.imgur.com/3/image/", {
+          method: "post",
+          headers: {
+            Authorization: "Client-ID 99920fc35d49cb3"
+          },
+          body: formData
+        }).then(data => data.json()).then(response => {
+          value.imageUrl = response.data.link
+        })
+        console.log("Salvou imagem")
+      }
 
       if (id > 0) {
         handleUpdateUsuario(value, id)
@@ -22,10 +46,11 @@ export const Formulario = ({ id, usuario }) => {
         handleSave(value);
         console.log('salva')
         alert("Usuário cadastrado: " + value.nome);
+
       }
 
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e.ErrorMessage);
     }
   }
 
@@ -35,7 +60,8 @@ export const Formulario = ({ id, usuario }) => {
       "nome": value.nome,
       "email": value.email,
       "telefone": value.telefone,
-      "cpf": value.cpf
+      "cpf": value.cpf,
+      "senha": value.senha
     })
   }
 
@@ -45,17 +71,30 @@ export const Formulario = ({ id, usuario }) => {
       "nome": value.nome,
       "email": value.email,
       "telefone": value.telefone,
-      "cpf": value.cpf
+      "cpf": value.cpf,
+      "senha": value.senha
+    }).catch(e => {
+      alert(e.response.data);
     })
   }
 
+  const formValidation = (value) => {
+    const msgError = [];
+
+    if (value.senha !== value.senhaRepetida) {
+      msgError.push("Repita a senha corretamente");
+    }
+    return msgError;
+  }
 
   const validations = yup.object().shape({
     nome: yup.string().min(3).required(),
     email: yup.string().email().required(),
     telefone: yup.string().max(11).min(11).required(),
     cpf: yup.string().min(11).required(),
-    id: yup.number()
+    id: yup.number(),
+    senha: yup.string().min(8).required(),
+    senhaRepetida: yup.string().min(8).required()
   })
 
   return (
@@ -72,11 +111,10 @@ export const Formulario = ({ id, usuario }) => {
         <div className={styles.grupo_formulario}>
           <Field
             placeholder={usuario ? usuario.nome : "Nome"} name="nome" />
-
           <ErrorMessage component="span" name='nome' />
         </div>
         <div className={styles.grupo_formulario}>
-          <Field placeholder={usuario ? usuario.email : "Email"} name="email" />
+          <Field type="email" placeholder={usuario ? usuario.email : "Email"} name="email" />
           <ErrorMessage name='email' />
         </div>
         <div className={styles.grupo_formulario}>
@@ -86,6 +124,19 @@ export const Formulario = ({ id, usuario }) => {
         <div className={styles.grupo_formulario}>
           <Field placeholder={usuario ? usuario.cpf : "CPF"} name="cpf" />
           <ErrorMessage name='cpf' />
+        </div>
+        <div className={styles.grupo_formulario}>
+          <Field onChange={(event => setFile(event.target.files[0]))}
+            type="file" placeholder={usuario ? usuario.imageUrl : "imageUrl"} name="imageUrl" />
+          <ErrorMessage name='imageUrl' />
+        </div>
+        <div className={styles.grupo_formulario}>
+          <Field type="password" placeholder={usuario ? usuario.senha : "senha"} name="senha" />
+          <ErrorMessage name='senha' />
+        </div>
+        <div className={styles.grupo_formulario}>
+          <Field type="password" placeholder={"Digite a senha novamente"} name="senhaRepetida" />
+          <ErrorMessage name='SenhaRepetida' />
         </div>
         {id != null, id != undefined &&
           <div className={styles.grupo_formulario}>

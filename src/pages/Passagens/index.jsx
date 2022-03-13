@@ -2,6 +2,7 @@ import { Remove, ShoppingCart } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NotFoundElement } from '../../components';
+import { registrarTokenExistente } from '../../service/api';
 import { deleteData, getData } from '../../utils';
 import styles from './styles.module.css';
 
@@ -12,6 +13,7 @@ export const Passagens = () => {
   const [updateEffect, setUpdateEffect] = useState(false);
 
   useEffect(() => {
+    registrarTokenExistente();
     try {
       getData('passagem', handleData);
       getData('viagem', handleTravels);

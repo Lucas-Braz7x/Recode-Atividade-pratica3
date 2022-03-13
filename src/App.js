@@ -5,6 +5,7 @@ import { Header, Footer, Container, Content } from './layout';
 import './styles/Global.css';
 import { Provider } from 'react-redux';
 import { Store } from './store/store';
+import { Login } from './pages/Login';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
               <Route element={<Viagem />} path="/viagem" />
               <Route element={<Passagens />} path="/passagens" />
               <Route element={<Usuario />} path="/usuario" />
+              <Route element={<Login />} path="/login" />
             </Routes>
           </Content>
           <Footer />

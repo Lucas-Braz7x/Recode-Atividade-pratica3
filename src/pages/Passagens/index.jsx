@@ -1,19 +1,28 @@
 import { Remove, ShoppingCart } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
+import { useJwt } from "react-jwt";
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { NotFoundElement } from '../../components';
-import { registrarTokenExistente } from '../../service/api';
+//import { registrarTokenExistente } from '../../service/api';
 import { deleteData, getData } from '../../utils';
-import styles from './styles.module.css';
+
+import './styles.scss';
+
 
 export const Passagens = () => {
   const [passagens, setPassagens] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [viagens, setViagens] = useState([]);
   const [updateEffect, setUpdateEffect] = useState(false);
+  const { decodedToken, isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
+  const history = useNavigate();
 
   useEffect(() => {
-    registrarTokenExistente();
+    if (isExpired) {
+      history('/login');
+    }
+
     try {
       getData('passagem', handleData);
       getData('viagem', handleTravels);
@@ -21,7 +30,8 @@ export const Passagens = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+
+  }, [isExpired]);
 
 
   useEffect(() => {
@@ -46,40 +56,29 @@ export const Passagens = () => {
     setUpdateEffect(!updateEffect);
 
     const viagem = await document.getElementById('viagem');
-    const usuario = await document.getElementById('usuario');
 
-    if (viagem.value && usuario.value) {
+
+    if (viagem.value) {
       const viagemAtual = viagem.value.split('-');
       const filterViagem = viagens.filter((viagem) => {
         return viagem.destinoViagem === viagemAtual[0]
       })
 
-      const usuarioAtual = usuario.value.split('-');
       const filterUsuario = usuarios.filter((usuario) => {
-        return usuario.nome === usuarioAtual[0]
+        return usuario.id === decodedToken.id;
       })
 
       addCart(filterUsuario[0], filterViagem[0]);
-      alert("Viagem: " + viagem.value + " Usuario: " + usuario.value)
+      alert("Viagem: " + viagem.value + " Usuario: " + filterUsuario[0].nome)
       viagem.value = '';
-      usuario.value = '';
     } else {
       alert("Preencha os campos corretamente...")
     }
   }
 
   return (
-    <div className={styles.passagens}>
-      <div className={styles.cadastroPassagens}>
-        <select name="usuario" id="usuario" >
-          <option defaultValue='' value=''>Usuário</option>
-          {usuarios.map((usuario, indice) => (
-            <option key={indice} value={usuario.nome}>
-              {usuario.nome} - {usuario.email}
-            </option>
-          ))}
-        </select>
-
+    <div className="passagens">
+      <div className="cadastroPassagens">
         <select name="viagem" id="viagem">
           <option defaultValue='' value=''>Viagem</option>
           {viagens.map((viagem, indice) => (
@@ -90,28 +89,31 @@ export const Passagens = () => {
         </select>
 
         <div
-          className={styles.carrinho}
+          className="carrinho"
           onClick={handleSelectValue}
         >
           <ShoppingCart sx={{ color: "#6c63ff" }} />
         </div>
       </div>
 
-      <div className={styles.cardContainer}>
+      <div className="cardContainer">
         {passagens.length === 0 ? <NotFoundElement /> :
 
 
           passagens.map((passagem, indice) => (
-            <div className={styles.cardPassagem} key={indice}>
+            <div className="cardPassagem" key={indice}>
               <p >Viagem: {passagem.viagem.destinoViagem}</p>
               <p>Passageiro: {passagem.usuario.nome}</p>
               <p>Preço: R${passagem.viagem.preco}</p>
-              <div onClick={() => {
-                deleteData('passagem', passagem.id)
-                setUpdateEffect(!updateEffect)
-              }} className={styles.icones}>
-                <Remove />
-              </div>
+
+              {passagem.usuario.id === decodedToken.id &&
+                <div onClick={() => {
+                  setUpdateEffect(!updateEffect)
+                  deleteData('passagem', passagem.id)
+                }} className="icones">
+                  <Remove />
+                </div>
+              }
             </div>
           ))
         }

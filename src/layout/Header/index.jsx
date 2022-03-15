@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Menu, Close } from '@mui/icons-material';
+import { ShoppingCart, Menu, Close, Login, Logout } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { Cart, Modal } from '../../components';
 import styles from './style.module.css';
-
+import { useJwt } from 'react-jwt';
 export const Header = () => {
   const [modalOpened, setModalOpened] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { decodedToken, isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
+  const [isLogin, setIsLogin] = useState(!isExpired);
+
+  console.log(decodedToken)
   const handleClose = () => {
     setModalOpened(!modalOpened);
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem("USUARIO_LOGADO");
+    setIsLogin(!isLogin);
+  }
+
+
   return (
     <>
       <header className={styles.header}>
@@ -29,6 +40,19 @@ export const Header = () => {
             </li>
             <li className={menuOpen ? styles.menuActive : styles.disabled}>
               <Link to='/usuario'>Usuario</Link>
+            </li>
+            <li className={menuOpen ? styles.menuActive : styles.disabled}>
+
+              <Link to='/login'>
+                {
+                  isLogin ?
+                    <Login sx={{ color: "#ffffff" }} />
+                    :
+                    <Logout
+                      onClick={handleLogout}
+                      sx={{ color: "#ffffff" }} />
+                }
+              </Link>
             </li>
             <li>
               <ShoppingCart

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import "./styles.scss";
-import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { Button } from '../../components';
+import { Button, mostrarMensagem } from '../../components';
 import { api, registrarToken } from '../../service/api';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import animationData from '../../assets/animation/login-animate.json';
-
+import * as yup from 'yup';
 import Lottie from 'lottie-react';
-import { useNavigate } from 'react-router-dom';
+import animationData from '../../assets/animation/login-animate.json';
+import "./styles.scss";
+import 'toastr/build/toastr.min.js';
+import 'toastr/build/toastr.css';
+
 
 export const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -16,13 +18,14 @@ export const Login = () => {
 
   const handleSubmit = value => {
     try {
-      handleSave(value);
+      userLogin(value);
     } catch (error) {
+      mostrarMensagem("error", error, "Falha ao autenticar usuário")
       console.log(error);
     }
   }
 
-  const handleSave = value => {
+  const userLogin = value => {
     api.post("/usuario/login", {
       "email": value.email,
       "senha": value.senha
@@ -30,13 +33,12 @@ export const Login = () => {
       .then((response) => {
         salvarLocal(response.data);
         console.log('salva')
-        alert("Usuário autenticado com sucesso: ");
+        mostrarMensagem("success", "Usuário autenticado com sucesso: ", "Bem-vindo!")
 
         history('/');
       })
       .catch(e => {
-        alert(e.response.data);
-        console.log("error", e.response.data, "Falha ao autenticar usuário")
+        mostrarMensagem("error", e.response.data, "Falha ao autenticar usuário")
       });
   }
 

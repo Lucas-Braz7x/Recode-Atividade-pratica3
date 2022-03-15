@@ -1,4 +1,7 @@
-import axios from 'axios'
+import axios from 'axios';
+//import { useJwt } from "react-jwt";
+
+
 
 export const api = axios.create({
   //baseURL: "https://agencia-spring.herokuapp.com"
@@ -14,7 +17,18 @@ export const registrarToken = (token) => {
 }
 
 
-export const registrarTokenExistente = () => {
+/* export const registrarTokenExistente = () => {
   const token = localStorage.getItem("USUARIO_LOGADO");
+  useJwt
   registrarToken(token);
 }
+
+export const Logar = (token) => {
+  api.post("/usuario/login", {
+    "email": value.email,
+    "senha": value.senha
+  })
+    .then((response) => {
+      salvarLocal(response.data);
+    })
+} */

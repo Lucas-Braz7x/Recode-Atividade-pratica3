@@ -1,22 +1,21 @@
 import React from 'react';
 import styles from './styles.module.css';
-
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import * as yup from 'yup';
 import { Button } from '..';
 import { api } from '../../service/api';
 import * as P from 'prop-types';
 
 export const FormularioViagem = ({ id, onClose, handleUpdate }) => {
-  const handleSubmit = (value) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(event)
     try {
       console.log(id);
 
       if (id > 0) {
-        handleUpdateViagem(value, id)
+        handleUpdateViagem("", id)
         console.log('atualiza')
       } else {
-        handleSave(value);
+        handleSave("value");
         console.log('salva')
       }
       handleUpdate();
@@ -44,43 +43,31 @@ export const FormularioViagem = ({ id, onClose, handleUpdate }) => {
     })
   }
 
-  const validations = yup.object().shape({
-    destinoViagem: yup.string().min(2).required(),
-    preco: yup.number().required(),
-    taxas: yup.number().max(100).min(0).required(),
-    id: yup.number(),
-  })
-
   return (
-    <Formik
-      initialValues={{}}
-      onSubmit={(event) => console.log(event.value), handleSubmit}
-      validationSchema={validations}
-    >
-      <Form className={styles.formulario}>
-        <span>Cadastre-se e vivencie as melhores experiências</span>
-        <div className={styles.grupo_formulario}>
-          <Field placeholder="Destino" name="destinoViagem" />
-          <ErrorMessage component="span" name='destinoViagem' />
-        </div>
-        <div className={styles.grupo_formulario}>
-          <Field placeholder="Preço" name="preco" />
-          <ErrorMessage name='preco' />
-        </div>
-        <div className={styles.grupo_formulario}>
-          <Field placeholder="Taxas" name="taxas" />
-          <ErrorMessage name='taxas' />
-        </div>
-        {id !== null, id !== undefined &&
+    <form onSubmit={(event) => handleSubmit(event)}
+      className={styles.formulario}>
+      <span>Cadastre-se e vivencie as melhores experiências</span>
+      <div className={styles.grupo_formulario}>
+        <input placeholder="Destino" name="destinoViagem" />
 
-          <div className={styles.grupo_formulario}>
-            <Field placeholder={id} disabled value={id} name="id" />
-            <ErrorMessage name='id' />
-          </div>
-        }
-        <Button>Cadastrar</Button>
-      </Form>
-    </Formik>
+      </div>
+      <div className={styles.grupo_formulario}>
+        <inpu placeholder="Preço" name="preco" />
+
+      </div>
+      <div className={styles.grupo_formulario}>
+        <input placeholder="Taxas" name="taxas" />
+
+      </div>
+      {id !== null, id !== undefined &&
+
+        <div className={styles.grupo_formulario}>
+          <input placeholder={id} disabled value={id} name="id" />
+
+        </div>
+      }
+      <Button>Cadastrar</Button>
+    </form>
   )
 }
 

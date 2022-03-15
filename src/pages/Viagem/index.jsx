@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './styles.module.css';
+import './styles.scss';
 
 import imgBannerAdventure from '../../assets/adventure.svg';
 
@@ -47,9 +47,9 @@ export const Viagem = () => {
 
   return (
     <>
-      <section className={styles.banner_pesquisa}>
+      <section className="banner_pesquisa">
         <img src={imgBannerAdventure} alt="Imagem de pesquisa" />
-        <div className={styles.pesquisa}>
+        <div className="pesquisa">
           <input
             onChange={(event) => setInputValue(event.target.value)}
             type="search"
@@ -60,7 +60,7 @@ export const Viagem = () => {
         </div>
       </section>
       {filterData.length === 0 ? <NotFoundElement /> :
-        <div className={styles.cardContainer}>
+        <div className="cardContainer">
           {filterData.map((viagem, indice) => (
             <Card
               key={indice}
@@ -70,7 +70,7 @@ export const Viagem = () => {
           ))}
         </div>}
 
-      <div className={styles.adicionar}>
+      <div className="adicionar">
         <Add
           color='success'
           alt='Adicionar viagem'

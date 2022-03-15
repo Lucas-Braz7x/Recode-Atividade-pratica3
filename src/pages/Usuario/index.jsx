@@ -1,35 +1,34 @@
 import React from 'react';
 import { useState } from 'react';
-import { Add, ListAlt, Remove, Settings, Warning } from '@mui/icons-material';
+import { useEffect } from 'react';
+import { useJwt } from "react-jwt";
+import { Add, ListAlt, Remove, Settings } from '@mui/icons-material';
 import { Formulario } from '../../components';
 import styles from './styles.module.css';
 import { deleteData, getData } from '../../utils';
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Usuario = () => {
   const [activeIcon, setActiveIcon] = useState('add');
   const [usuarios, setUsuarios] = useState([]);
-  const [passagens, setPassagens] = useState([]);
-  const [filterUsuarios, setFilterUsuarios] = useState({});
-  const [inputValue, setInputValue] = useState('')
   const [updateEffect, setUpdateEffect] = useState(false);
+  const { decodedToken, isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
+  const history = useNavigate();
+
+  useEffect(() => {
+    if (isExpired) {
+      history('/login')
+    }
+  }, [isExpired])
 
   useEffect(() => {
     getData('usuario', setUsuarios);
-    getData('passagem', setPassagens);
   }, [activeIcon, updateEffect])
 
 
-  useEffect(() => {
-    const usuarioFiltrado = usuarios.filter((usuario) => usuario.nome.toLowerCase().includes(inputValue.toLowerCase()))
-    setFilterUsuarios(usuarioFiltrado);
-  }, [inputValue])
 
+  const usuarioFiltrado = usuarios.filter((usuario) => usuario.id == decodedToken.id)
   const handleActiveIcon = (icon) => setActiveIcon(icon);
-  const handleDelete = (usuario) => {
-    const teste = passagens.filter((passagem) => passagem.usuario.nome === usuario.nome);
-    return teste.length;
-  }
 
   return (
     <div className={styles.container}>
@@ -53,49 +52,40 @@ export const Usuario = () => {
 
       {activeIcon === 'add' && <Formulario />}
       {activeIcon === 'setting' &&
-        <>
-          <input type="text" onChange={(event) => setInputValue(event.target.value)} />
-
-          {filterUsuarios.length > 0, inputValue.length > 0 &&
-            filterUsuarios.map((usuario, indice) => (
-              <Formulario usuario={usuario} key={indice} id={usuario.id} />
-            ))}
-        </>
+        <Formulario usuario={usuarioFiltrado[0]} id={decodedToken.id} />
       }
       {activeIcon === 'list' &&
-        <>
-          <div className={styles.cardContainer}>
-            {usuarios.map((usuario, indice) => (
-              <div className={styles.cardUsuario} key={indice}>
-                <p >Nome: {usuario.nome}</p>
-                <p>Email: {usuario.email}</p>
-                <p>Telefone: {usuario.telefone}</p>
-                <p>CPF: {usuario.cpf}</p>
-                <div
-                  onClick={() => {
-                    if (handleDelete(usuario) === 0) {
-                      deleteData('usuario', usuario.id),
-                        setUpdateEffect(!updateEffect)
-                    } else {
-                      alert("Há passagens no nome do usuário")
-                    }
-                  }} className={styles.iconesCard}>
-                  <Remove />
-                </div>
-                {
-                  handleDelete(usuario) > 0 && <Warning
-                    className={styles.aviso} />
-                }
-              </div>
 
-            ))}
+        <div className={styles.cardContainer}>
+
+          <div className={styles.cardUsuario}>
+            <p >Nome: {usuarioFiltrado[0].nome}</p>
+            <p>Email: {usuarioFiltrado[0].email}</p>
+            <p>Telefone: *****{usuarioFiltrado[0].telefone.slice(7)}</p>
+            <p>CPF: *******{usuarioFiltrado[0].cpf.slice(7)}</p>
+            <div
+              onClick={() => {
+                const response = confirm("Há passagens no nome do usuário")
+                setUpdateEffect(s => !s)
+                if (response) {
+
+                  localStorage.removeItem('USUARIO_LOGADO');
+                  deleteData('usuario', usuarioFiltrado[0].id);
+                  history('/');
+                }
+                console.log(response);
+
+              }} className={styles.iconesCard}>
+              <Remove />
+            </div>
           </div>
-          <p>Obs: {<Warning />} Para excluir este usuário é preciso
-            excluir as passagens emitidas</p>
-        </>
+
+
+        </div>
+
       }
 
-    </div>
+    </div >
 
 
   )

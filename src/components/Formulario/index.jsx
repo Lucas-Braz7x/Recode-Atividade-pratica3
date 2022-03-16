@@ -65,19 +65,23 @@ export const Formulario = ({ usuario, id }) => {
   }
 
   const handleSaveImage = (value) => {
+    const CLIENT_ID = 'a532c7c687b17fd';
     const formData = new FormData();
     if (file) {
       formData.append("image", file)
-      fetch("https://api.imgur.com/3/image/", {
-        method: "post",
+      fetch("https://api.imgur.com/3/image", {
+        method: "POST",
         headers: {
-          Authorization: "Client-ID 99920fc35d49cb3"
+          Authorization: 'Client-ID' + CLIENT_ID,
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json'
         },
+        mimeType: 'multipart/form-data',
         body: formData
       }).then(data => data.json()).then(response => {
+        console.log(response);
         value.imageUrl = response.data.link
-      })
-      console.log("Salvou imagem")
+      }).catch(error => console.log(error.data))
     }
   }
 
@@ -121,7 +125,7 @@ export const Formulario = ({ usuario, id }) => {
   }
 
   return (
-    <form onSubmit={(event) => handleSubmit(event)}
+    <form encType="multipart/form-data" onSubmit={(event) => handleSubmit(event)}
       className='formulario'>
       <span>
         {id ? "Atualizar usuário" :

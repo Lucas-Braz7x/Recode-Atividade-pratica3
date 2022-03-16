@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles.module.css';
+import './styles.scss';
 import imgData from '../../assets/travel_plans.svg';
 import { Link } from 'react-router-dom';
 import { Button } from '..';
@@ -8,10 +8,10 @@ import { Button } from '..';
 
 export const Informativo = () => {
   return (
-    <div className={styles.viagens}>
-      <section className={styles.planejamento}>
+    <div className="viagens">
+      <section className="planejamento">
         <div><img src={imgData} alt="" /></div>
-        <div className={styles.cartao_planejamento}>
+        <div className="cartao_planejamento">
           <h3>Viagens planejadas</h3>
           <h4>Pense</h4>
           <h4>Planeje</h4>

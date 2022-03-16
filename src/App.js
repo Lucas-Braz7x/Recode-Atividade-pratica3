@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Home, Passagens, Usuario, Viagem } from './pages';
 import { Header, Footer, Container, Content } from './layout';
-import './styles/Global.css';
+import './styles/Global.scss';
 import { Provider } from 'react-redux';
 import { Store } from './store/store';
 import { Login } from './pages/Login';

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useJwt } from "react-jwt";
 import { Add, ListAlt, Remove, Settings } from '@mui/icons-material';
 import { Formulario } from '../../components';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import { deleteData, getData } from '../../utils';
 import { useNavigate } from 'react-router-dom';
 

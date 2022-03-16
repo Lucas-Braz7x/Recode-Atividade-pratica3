@@ -3,14 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { useJwt } from "react-jwt";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { NotFoundElement } from '../../components';
+import { mostrarMensagem, NotFoundElement } from '../../components';
 //import { registrarTokenExistente } from '../../service/api';
 import { deleteData, getData } from '../../utils';
+import 'toastr/build/toastr.min.js';
+import 'toastr/build/toastr.css'
 
 import './styles.scss';
+import Lottie from 'lottie-react';
+import animationData from '../../assets/animation/travelling-now.json';
 
 
 export const Passagens = () => {
+
   const [passagens, setPassagens] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [viagens, setViagens] = useState([]);
@@ -67,17 +72,28 @@ export const Passagens = () => {
       const filterUsuario = usuarios.filter((usuario) => {
         return usuario.id === decodedToken.id;
       })
-
       addCart(filterUsuario[0], filterViagem[0]);
-      alert("Viagem: " + viagem.value + " Usuario: " + filterUsuario[0].nome)
+      mostrarMensagem("success", "Adicionado ao carrinho de compra", "Finalize a sua compra...")
       viagem.value = '';
     } else {
-      alert("Preencha os campos corretamente...")
+      mostrarMensagem("error", "Selecione um destino...", "Falha ao adicionar no carrinho de compra")
     }
+
+    setUpdateEffect(!updateEffect);
+
   }
+
+  const passagensFiltrados = passagens.filter((passagem) => {
+    return passagem.usuario.id == decodedToken.id;
+  })
 
   return (
     <div className="passagens">
+      <Lottie
+        className="animacao"
+        animationData={animationData}
+        loop={true}
+      />
       <div className="cadastroPassagens">
         <select name="viagem" id="viagem">
           <option defaultValue='' value=''>Viagem</option>
@@ -100,7 +116,7 @@ export const Passagens = () => {
         {passagens.length === 0 ? <NotFoundElement /> :
 
 
-          passagens.map((passagem, indice) => (
+          passagensFiltrados.map((passagem, indice) => (
             <div className="cardPassagem" key={indice}>
               <p >Viagem: {passagem.viagem.destinoViagem}</p>
               <p>Passageiro: {passagem.usuario.nome}</p>
@@ -108,8 +124,9 @@ export const Passagens = () => {
 
               {passagem.usuario.id === decodedToken.id &&
                 <div onClick={() => {
-                  setUpdateEffect(!updateEffect)
                   deleteData('passagem', passagem.id)
+                  mostrarMensagem('error', '', 'Viagem excluída com sucesso')
+                  setUpdateEffect(!updateEffect)
                 }} className="icones">
                   <Remove />
                 </div>

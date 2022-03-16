@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './styles.module.css';
+import './styles.scss';
 import * as P from 'prop-types';
 
 
 export const Button = (props) => {
-  return <button className={styles.button}>{props.children}</button>
+  return <button className="button">{props.children}</button>
 }
 
 Button.propTypes = {

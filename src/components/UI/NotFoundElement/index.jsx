@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './styles.module.css';
+import './styles.scss';
 import Lottie from 'lottie-react';
 import notFoundAnimation from '../../../assets/animation/not-found.json';
 
 export const NotFoundElement = () => {
   return (
-    <div className={styles.notFound}>
+    <div className="notFound">
       <Lottie
         loop={true}
         animationData={notFoundAnimation}

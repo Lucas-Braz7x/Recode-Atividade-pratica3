@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useJwt } from "react-jwt";
 import './styles.scss';
 
 import imgBannerAdventure from '../../assets/adventure.svg';
 
 import { Search, Add } from '@mui/icons-material';
 import { getData } from '../../utils';
-import { NotFoundElement } from '../../components/UI/NotFoundElement';
+import { NotFoundElement, mostrarMensagem } from '../../components';
 import { Card, Modal, FormularioViagem } from '../../components';
+import { useNavigate } from 'react-router-dom';
+
+import 'toastr/build/toastr.min.js';
+import 'toastr/build/toastr.css';
 
 export const Viagem = () => {
   const [data, setData] = useState([]);
@@ -15,13 +20,28 @@ export const Viagem = () => {
   const [modalOpened, setModalOpened] = useState(false);
   const [updateEffect, setUpdateEffect] = useState(false);
   const [id, setId] = useState(null);
+  const [userEmailToken, setUserEmailToken] = useState(false);
+  const { decodedToken, isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
+  const history = useNavigate();
+
+  useEffect(() => {
+    if (isExpired) {
+      history('/login');
+      mostrarMensagem("error", "Faça o login novamente", "Usuário deslogado");
+    }
+
+    if (decodedToken) {
+      setUserEmailToken(decodedToken.email === "admin@gmail.com" ? true : false);
+    }
+  }, [isExpired, decodedToken])
+
   useEffect(() => {
     getData('viagem', handleData);
   }, [updateEffect]);
 
   useEffect(() => {
     handleFilter(data);
-  }, [data])
+  }, [data, updateEffect])
 
   useEffect(() => {
     //Por num effect
@@ -70,13 +90,16 @@ export const Viagem = () => {
           ))}
         </div>}
 
-      <div className="adicionar">
-        <Add
-          color='success'
-          alt='Adicionar viagem'
-          onClick={() => { setModalOpened(true) }}
-        />
-      </div>
+
+      {userEmailToken && (
+        <div className="adicionar">
+          <Add
+            color='success'
+            alt='Adicionar viagem'
+            onClick={() => { setModalOpened(true) }}
+          />
+        </div>
+      )}
 
       <Modal
         open={modalOpened}

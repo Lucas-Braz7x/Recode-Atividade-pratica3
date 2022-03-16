@@ -11,17 +11,11 @@
 
   box-shadow: 0 0 15px #7a7a7a;
   z-index: 10;
-}
 
-.header a{
-  text-decoration: none;
-}
+  a{
+    text-decoration: none;
+  }
 
-
-.navegacao ul{
-  list-style: none;
-  display: flex;
-  gap: 50px;
 }
 
 .navegacao{
@@ -30,8 +24,14 @@
   align-items: center;
 
   padding: 10px 50px;
-}
 
+  ul{
+    list-style: none;
+    display: flex;
+    gap: 50px;
+  }
+
+}
 
 .menu_opcoes li:hover{
   transform: scale(1.1);

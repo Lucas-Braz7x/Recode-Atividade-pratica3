@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { ShoppingCart, Menu, Close, Login, Logout } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { Cart, Modal } from '../../components';
-import styles from './style.module.css';
+import './styles.scss';
 import { useJwt } from 'react-jwt';
+
 export const Header = () => {
   const [modalOpened, setModalOpened] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { decodedToken, isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
+  const { isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
   const [isLogin, setIsLogin] = useState(!isExpired);
 
-  console.log(decodedToken)
+  console.log(isLogin)
   const handleClose = () => {
     setModalOpened(!modalOpened);
   }
@@ -23,25 +24,25 @@ export const Header = () => {
 
   return (
     <>
-      <header className={styles.header}>
-        <nav className={styles.navegacao}>
-          <div className={styles.logo}>
+      <header className="header">
+        <nav className="navegacao">
+          <div className="logo">
             <Link to='/'>Passo&Certo</Link>
           </div>
-          <ul className={styles.menu_opcoes}>
-            <li className={menuOpen ? styles.menuActive : styles.disabled}>
+          <ul className="menu_opcoes">
+            <li className={menuOpen ? "menuActive" : "disabled"}>
               <Link to='/'>Home</Link>
             </li>
-            <li className={menuOpen ? styles.menuActive : styles.disabled}>
+            <li className={menuOpen ? "menuActive" : "disabled"}>
               <Link to='/passagens'>Passagens</Link>
             </li>
-            <li className={menuOpen ? styles.menuActive : styles.disabled}>
+            <li className={menuOpen ? "menuActive" : "disabled"}>
               <Link to='/viagem'>Viagens</Link>
             </li>
-            <li className={menuOpen ? styles.menuActive : styles.disabled}>
+            <li className={menuOpen ? "menuActive" : "disabled"}>
               <Link to='/usuario'>Usuario</Link>
             </li>
-            <li className={menuOpen ? styles.menuActive : styles.disabled}>
+            <li className={menuOpen ? "menuActive" : "disabled"}>
 
               <Link to='/login'>
                 {

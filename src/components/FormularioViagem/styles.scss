@@ -1,0 +1,66 @@
+.formulario{
+  margin: 20px 0 150px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  background: linear-gradient(315deg,#b9b7e6,#6c63ff, #6c63ff, #6c63ff);
+  border-radius: 20px;
+  height: 320px;
+  width: 300px;
+  box-shadow: 0 0 20px #838485;
+
+  span{
+    display: inline-block;
+    width: 220px;
+
+    text-align: center;
+    color: #d6d6d6;
+    font-weight: bold;
+    font-size: 18px;
+
+  }
+}
+.grupo_formulario{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input {
+    border: none;
+    outline: none;
+    background: transparent;
+
+    border-bottom: 1.5px solid #ccc;
+
+    padding: 5px 0;
+    width: 220px;
+    transition: border-color .3s;
+    &::placeholder{
+      color: #d6d6d6;
+      transition: color .3s;
+      background: transparent;
+
+    }
+
+    &:hover::placeholder{
+      color: #0e153c;
+    }
+
+    &:focus &::placeholder,
+    &:hover,
+    &:focus{
+      border-color: #132794;
+      color: #0e153c;
+    }
+  }
+
+
+  span{
+    color: #d6d6d6;
+    font-style: italic;
+  }
+}
+
+

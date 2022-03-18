@@ -11,6 +11,8 @@
   background: #eeeeee;
   padding: 20px;
   position: relative;
+
+  border-radius: 10px;
 }
 
 .carrinho_Content{
@@ -52,7 +54,7 @@
   font-size: 14px;
 }
 
-.icones{
+.icones_cart{
   position: absolute;
   left: -3px;
   top: -10px;
@@ -65,13 +67,14 @@
   height: 20px;
   border-radius: 50%;
   box-shadow: 0 0 3px#7a7a7a;
+
+  & svg{
+    color: #776eff;
+    cursor: pointer;
+    transition: color .3s;
+    &:hover{
+      color: #0e153c;
+    }
+  }
 }
 
-.icones svg{
-  color: #776eff;
-  cursor: pointer;
-  transition: color .3s;
-}
-.icones svg:hover{
-  color: #0e153c;
-}

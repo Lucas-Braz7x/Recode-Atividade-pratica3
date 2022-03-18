@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './styles.module.css';
+import './styles.scss';
 
 export const TituloHome = () => {
   return (
     <>
-      <h1 className={styles.titulo}>Passo&Certo</h1>
-      <span className={styles.sub_titulo}>
+      <h1 className="titulo">Passo&Certo</h1>
+      <span className="sub_titulo">
         Faça das suas viagens
         uma experiência inesquecível
       </span>

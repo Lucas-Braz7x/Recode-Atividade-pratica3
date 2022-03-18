@@ -1,9 +1,9 @@
 /* eslint-disable */
 import React from 'react';
 import P from 'prop-types';
-import styles from './style.module.css';
+import './styles.scss';
 
 export const Container = (props) => {
-  return (<div className={styles.container}>{props.children}</div>
+  return (<div className="container">{props.children}</div>
   )
 }

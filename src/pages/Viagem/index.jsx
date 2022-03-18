@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import styles from './styles.module.css';
+import { useJwt } from "react-jwt";
+import './styles.scss';
 
 import imgBannerAdventure from '../../assets/adventure.svg';
 
 import { Search, Add } from '@mui/icons-material';
 import { getData } from '../../utils';
-import { NotFoundElement } from '../../components/UI/NotFoundElement';
+import { NotFoundElement, mostrarMensagem } from '../../components';
 import { Card, Modal, FormularioViagem } from '../../components';
+import { useNavigate } from 'react-router-dom';
+
+import 'toastr/build/toastr.min.js';
+import 'toastr/build/toastr.css';
 
 export const Viagem = () => {
   const [data, setData] = useState([]);
@@ -15,13 +20,28 @@ export const Viagem = () => {
   const [modalOpened, setModalOpened] = useState(false);
   const [updateEffect, setUpdateEffect] = useState(false);
   const [id, setId] = useState(null);
+  const [userEmailToken, setUserEmailToken] = useState(false);
+  const { decodedToken, isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
+  const history = useNavigate();
+
+  useEffect(() => {
+    if (isExpired) {
+      history('/login');
+      mostrarMensagem("error", "Faça o login", "Usuário deslogado");
+    }
+
+    if (decodedToken) {
+      setUserEmailToken(decodedToken.email === "admin@gmail.com" ? true : false);
+    }
+  }, [isExpired, decodedToken])
+
   useEffect(() => {
     getData('viagem', handleData);
   }, [updateEffect]);
 
   useEffect(() => {
     handleFilter(data);
-  }, [data])
+  }, [data, updateEffect])
 
   useEffect(() => {
     //Por num effect
@@ -47,9 +67,9 @@ export const Viagem = () => {
 
   return (
     <>
-      <section className={styles.banner_pesquisa}>
+      <section className="banner_pesquisa">
         <img src={imgBannerAdventure} alt="Imagem de pesquisa" />
-        <div className={styles.pesquisa}>
+        <div className="pesquisa">
           <input
             onChange={(event) => setInputValue(event.target.value)}
             type="search"
@@ -60,7 +80,7 @@ export const Viagem = () => {
         </div>
       </section>
       {filterData.length === 0 ? <NotFoundElement /> :
-        <div className={styles.cardContainer}>
+        <div className="cardContainer">
           {filterData.map((viagem, indice) => (
             <Card
               key={indice}
@@ -70,13 +90,16 @@ export const Viagem = () => {
           ))}
         </div>}
 
-      <div className={styles.adicionar}>
-        <Add
-          color='success'
-          alt='Adicionar viagem'
-          onClick={() => { setModalOpened(true) }}
-        />
-      </div>
+
+      {userEmailToken && (
+        <div className="adicionar">
+          <Add
+            color='success'
+            alt='Adicionar viagem'
+            onClick={() => { setModalOpened(true) }}
+          />
+        </div>
+      )}
 
       <Modal
         open={modalOpened}

@@ -1,17 +1,34 @@
 import { Remove, ShoppingCart } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
+import { useJwt } from "react-jwt";
 import { useDispatch } from 'react-redux';
-import { NotFoundElement } from '../../components';
+import { useNavigate } from 'react-router-dom';
+import { mostrarMensagem, NotFoundElement } from '../../components';
+//import { registrarTokenExistente } from '../../service/api';
 import { deleteData, getData } from '../../utils';
-import styles from './styles.module.css';
+import 'toastr/build/toastr.min.js';
+import 'toastr/build/toastr.css'
+
+import './styles.scss';
+import Lottie from 'lottie-react';
+import animationData from '../../assets/animation/travelling-now.json';
+
 
 export const Passagens = () => {
+
   const [passagens, setPassagens] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [viagens, setViagens] = useState([]);
   const [updateEffect, setUpdateEffect] = useState(false);
+  const { decodedToken, isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
+  const history = useNavigate();
 
   useEffect(() => {
+    if (isExpired) {
+      history('/login');
+      mostrarMensagem("error", "Faça o login", "Usuário deslogado");
+    }
+
     try {
       getData('passagem', handleData);
       getData('viagem', handleTravels);
@@ -19,7 +36,8 @@ export const Passagens = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+
+  }, [isExpired]);
 
 
   useEffect(() => {
@@ -44,40 +62,40 @@ export const Passagens = () => {
     setUpdateEffect(!updateEffect);
 
     const viagem = await document.getElementById('viagem');
-    const usuario = await document.getElementById('usuario');
 
-    if (viagem.value && usuario.value) {
+
+    if (viagem.value) {
       const viagemAtual = viagem.value.split('-');
       const filterViagem = viagens.filter((viagem) => {
         return viagem.destinoViagem === viagemAtual[0]
       })
 
-      const usuarioAtual = usuario.value.split('-');
       const filterUsuario = usuarios.filter((usuario) => {
-        return usuario.nome === usuarioAtual[0]
+        return usuario.id === decodedToken.id;
       })
-
       addCart(filterUsuario[0], filterViagem[0]);
-      alert("Viagem: " + viagem.value + " Usuario: " + usuario.value)
+      mostrarMensagem("success", "Adicionado ao carrinho de compra", "Finalize a sua compra...")
       viagem.value = '';
-      usuario.value = '';
     } else {
-      alert("Preencha os campos corretamente...")
+      mostrarMensagem("error", "Selecione um destino...", "Falha ao adicionar no carrinho de compra")
     }
+
+    setUpdateEffect(!updateEffect);
+
   }
 
-  return (
-    <div className={styles.passagens}>
-      <div className={styles.cadastroPassagens}>
-        <select name="usuario" id="usuario" >
-          <option defaultValue='' value=''>Usuário</option>
-          {usuarios.map((usuario, indice) => (
-            <option key={indice} value={usuario.nome}>
-              {usuario.nome} - {usuario.email}
-            </option>
-          ))}
-        </select>
+  const passagensFiltrados = passagens.filter((passagem) => {
+    return passagem.usuario.id == decodedToken.id;
+  })
 
+  return (
+    <div className="passagens">
+      <Lottie
+        className="animacao"
+        animationData={animationData}
+        loop={true}
+      />
+      <div className="cadastroPassagens">
         <select name="viagem" id="viagem">
           <option defaultValue='' value=''>Viagem</option>
           {viagens.map((viagem, indice) => (
@@ -88,28 +106,32 @@ export const Passagens = () => {
         </select>
 
         <div
-          className={styles.carrinho}
+          className="carrinho"
           onClick={handleSelectValue}
         >
           <ShoppingCart sx={{ color: "#6c63ff" }} />
         </div>
       </div>
 
-      <div className={styles.cardContainer}>
+      <div className="cardContainer">
         {passagens.length === 0 ? <NotFoundElement /> :
 
 
-          passagens.map((passagem, indice) => (
-            <div className={styles.cardPassagem} key={indice}>
+          passagensFiltrados.map((passagem, indice) => (
+            <div className="cardPassagem" key={indice}>
               <p >Viagem: {passagem.viagem.destinoViagem}</p>
               <p>Passageiro: {passagem.usuario.nome}</p>
               <p>Preço: R${passagem.viagem.preco}</p>
-              <div onClick={() => {
-                deleteData('passagem', passagem.id)
-                setUpdateEffect(!updateEffect)
-              }} className={styles.icones}>
-                <Remove />
-              </div>
+
+              {passagem.usuario.id === decodedToken.id &&
+                <div onClick={() => {
+                  deleteData('passagem', passagem.id)
+                  mostrarMensagem('error', '', 'Viagem excluída com sucesso')
+                  setUpdateEffect(!updateEffect)
+                }} className="icones">
+                  <Remove />
+                </div>
+              }
             </div>
           ))
         }

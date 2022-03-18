@@ -1,0 +1,85 @@
+{
+  "estados": {
+    "Acre": {
+      "preco": 8.8
+    },
+    "Alagoas": {
+      "preco": 8.8
+    },
+    "Amapa": {
+      "preco": 8.8
+    },
+    "Amazonas": {
+      "preco": 8.8
+    },
+    "Bahia": {
+      "preco": 8.8
+    },
+    "Ceara": {
+      "preco": 8.8
+    },
+    "Espírito Santo": {
+      "preco": 8.8
+    },
+    "Goiás": {
+      "preco": 8.8
+    },
+    "Maranhão": {
+      "preco": 8.8
+    },
+    "Mato Grosso": {
+      "preco": 8.8
+    },
+    "Mato grosso do sul": {
+      "preco": 8.8
+    },
+    "Minas gerais": {
+      "preco": 8.8
+    },
+    "Pará": {
+      "preco": 8.8
+    },
+    "Paraíba": {
+      "preco": 8.8
+    },
+    "Paraná": {
+      "preco": 8.8
+    },
+    "Pernambuco": {
+      "preco": 8.8
+    },
+    "Piauí": {
+      "preco": 8.8
+    },
+    "Rio de janeiro": {
+      "preco": 8.8
+    },
+    "Rio grande do norte": {
+      "preco": 8.8
+    },
+    "Rio grande do sul": {
+      "preco": 8.8
+    },
+    "Rondônia": {
+      "preco": 8.8
+    },
+    "Roraima": {
+      "preco": 8.8
+    },
+    "Santa catarina": {
+      "preco": 8.8
+    },
+    "São paulo": {
+      "preco": 8.8
+    },
+    "Sergipe": {
+      "preco": 8.8
+    },
+    "Tocantins": {
+      "preco": 8.8
+    },
+    "Distrito federal": {
+      "preco": 8.8
+    }
+  }
+}

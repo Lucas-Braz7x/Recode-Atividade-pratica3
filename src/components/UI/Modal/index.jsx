@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from './styles.module.css';
+import './styles.scss';
 import * as P from 'prop-types';
 
 
@@ -26,8 +26,8 @@ export const Modal = ({ children, open, onClose }) => {
   }
 
   return (
-    <div className={styles.overlay} onClick={onOverlayClick}>
-      <div className={styles.modal_container} onClick={onDialogClick}>
+    <div className="overlay" onClick={onOverlayClick}>
+      <div className="modal_container" onClick={onDialogClick}>
         {children}
       </div>
     </div>

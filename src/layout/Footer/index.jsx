@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './style.module.css';
+import './styles.scss';
 import {
   Facebook,
   GitHub,
@@ -11,7 +11,7 @@ import {
 
 export const Footer = () => {
   return (
-    <footer className={styles.footer}>
+    <footer className='footer'>
       <p>Copyright &copy; 2021, Todos os direitos reservados </p>
       <ul>
         <li>

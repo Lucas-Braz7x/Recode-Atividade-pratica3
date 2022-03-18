@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './styles.module.css';
+import './styles.scss';
 
 import animationData from '../../assets/animation/travelling-animation.json';
 
@@ -19,7 +19,6 @@ export const Home = () => {
   }, [])
 
 
-
   return (
     <>
       {loading && <BallTriangle />}
@@ -27,7 +26,7 @@ export const Home = () => {
         <>
           <TituloHome />
           <Lottie
-            className={styles.animacao}
+            className="animacao"
             animationData={animationData}
             loop={true}
           />

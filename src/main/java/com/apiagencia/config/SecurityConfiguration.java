@@ -74,7 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	}
 	
 	//Permissões de acesso
-	//Configuração do "cors" com o spring security 
+	//Configuração do "cors" com o spring securit
 	@Bean
 	public FilterRegistrationBean<CorsFilter> corsFilter(){
 		List<String> all = Arrays.asList("*");

@@ -19,7 +19,6 @@ export const Home = () => {
   }, [])
 
 
-
   return (
     <>
       {loading && <BallTriangle />}

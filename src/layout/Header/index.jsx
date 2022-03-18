@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Menu, Close, Login, Logout } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import { Cart, Modal } from '../../components';
+import { ShoppingCart, Menu, Close, Login } from '@mui/icons-material';
+import { Link, useNavigate } from 'react-router-dom';
+import { Cart, Modal, mostrarMensagem } from '../../components';
 import './styles.scss';
 import { useJwt } from 'react-jwt';
+import 'toastr/build/toastr.min.js';
+import 'toastr/build/toastr.css';
 
 export const Header = () => {
   const [modalOpened, setModalOpened] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
-  const [isLogin, setIsLogin] = useState(!isExpired);
+  //const [isLogin, setIsLogin] = useState(!isExpired);
+  const history = useNavigate();
 
-  console.log(isLogin)
   const handleClose = () => {
     setModalOpened(!modalOpened);
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("USUARIO_LOGADO");
-    setIsLogin(!isLogin);
+
+    if (confirm("Deseja sair?")) {
+      mostrarMensagem("error", '', 'Logout efetuado')
+      localStorage.removeItem("USUARIO_LOGADO");
+      history('/login')
+    }
+  }
+
+  const handleLogin = () => {
+    if (isExpired) {
+      mostrarMensagem("warning", '', "Faça login!")
+      history('/login')
+    } else {
+      handleLogout()
+    }
   }
 
 
@@ -43,17 +58,7 @@ export const Header = () => {
               <Link to='/usuario'>Usuario</Link>
             </li>
             <li className={menuOpen ? "menuActive" : "disabled"}>
-
-              <Link to='/login'>
-                {
-                  isLogin ?
-                    <Login sx={{ color: "#ffffff" }} />
-                    :
-                    <Logout
-                      onClick={handleLogout}
-                      sx={{ color: "#ffffff" }} />
-                }
-              </Link>
+              <Login onClick={handleLogin} sx={{ color: "#ffffff" }} />
             </li>
             <li>
               <ShoppingCart

@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useJwt } from "react-jwt";
 import { Add, ListAlt, Remove, Settings } from '@mui/icons-material';
-import { Formulario } from '../../components';
+import { Formulario, mostrarMensagem } from '../../components';
 import styles from './styles.module.scss';
 import { deleteData, getData } from '../../utils';
 import { useNavigate } from 'react-router-dom';
+import 'toastr/build/toastr.min.js';
+import 'toastr/build/toastr.css';
 
 export const Usuario = () => {
   const [activeIcon, setActiveIcon] = useState('add');
@@ -17,7 +19,8 @@ export const Usuario = () => {
 
   useEffect(() => {
     if (isExpired) {
-      history('/login')
+      history('/login');
+      mostrarMensagem("error", "Faça o login", "Usuário deslogado");
     }
   }, [isExpired])
 
@@ -65,12 +68,13 @@ export const Usuario = () => {
             <p>CPF: *******{usuarioFiltrado[0].cpf.slice(7)}</p>
             <div
               onClick={() => {
-                const response = confirm("Há passagens no nome do usuário")
+                const response = confirm("Tem certeza que deseja excluir a sua conta?")
                 setUpdateEffect(s => !s)
                 if (response) {
 
                   localStorage.removeItem('USUARIO_LOGADO');
                   deleteData('usuario', usuarioFiltrado[0].id);
+                  mostrarMensagem("success", "Conta excluída")
                   history('/');
                 }
                 console.log(response);

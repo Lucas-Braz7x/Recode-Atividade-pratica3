@@ -11,7 +11,6 @@ import { useJwt } from "react-jwt";
 const App = () => {
   const { decodedToken, isExpired } = useJwt(localStorage.getItem("USUARIO_LOGADO"));
 
-
   useEffect(() => {
     const verificarLogin = () => setTimeout(() => {
       localStorage.removeItem("USUARIO_LOGADO");

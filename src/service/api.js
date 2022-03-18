@@ -4,8 +4,8 @@ import axios from 'axios';
 
 
 export const api = axios.create({
-  //baseURL: "https://agencia-spring.herokuapp.com"
-  baseURL: "http://localhost:8080/",
+  //baseURL: "http://localhost:8080/",
+  baseURL: "https://agencia-spring.herokuapp.com",
   withCredentials: true
 });
 

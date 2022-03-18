@@ -27,7 +27,7 @@ export const Viagem = () => {
   useEffect(() => {
     if (isExpired) {
       history('/login');
-      mostrarMensagem("error", "Faça o login novamente", "Usuário deslogado");
+      mostrarMensagem("error", "Faça o login", "Usuário deslogado");
     }
 
     if (decodedToken) {

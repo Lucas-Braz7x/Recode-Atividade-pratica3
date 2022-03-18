@@ -26,6 +26,7 @@ export const Passagens = () => {
   useEffect(() => {
     if (isExpired) {
       history('/login');
+      mostrarMensagem("error", "Faça o login", "Usuário deslogado");
     }
 
     try {

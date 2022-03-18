@@ -10,7 +10,6 @@ import 'toastr/build/toastr.css';
 
 export const Formulario = ({ usuario, id }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [file, setFile] = useState();
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -27,9 +26,6 @@ export const Formulario = ({ usuario, id }) => {
 
     const messages = formValidation(value);
 
-    if (file) {
-      handleSaveImage(value);
-    }
 
     try {
       if (id > 0) {
@@ -62,27 +58,6 @@ export const Formulario = ({ usuario, id }) => {
       "senha": value.senha,
     }).then(() => alert("Usuário atualizado: " + value.nome))
       .catch(error => alert("error", error.response.data, "Falha ao Atualizar"))
-  }
-
-  const handleSaveImage = (value) => {
-    const CLIENT_ID = 'a532c7c687b17fd';
-    const formData = new FormData();
-    if (file) {
-      formData.append("image", file)
-      fetch("https://api.imgur.com/3/image", {
-        method: "POST",
-        headers: {
-          Authorization: 'Client-ID' + CLIENT_ID,
-          'Content-Type': 'multipart/form-data',
-          'Accept': 'application/json'
-        },
-        mimeType: 'multipart/form-data',
-        body: formData
-      }).then(data => data.json()).then(response => {
-        console.log(response);
-        value.imageUrl = response.data.link
-      }).catch(error => console.log(error.data))
-    }
   }
 
   const handleSave = (value) => {
@@ -125,7 +100,7 @@ export const Formulario = ({ usuario, id }) => {
   }
 
   return (
-    <form encType="multipart/form-data" onSubmit={(event) => handleSubmit(event)}
+    <form method='POST' encType="multipart/form-data" onSubmit={(event) => handleSubmit(event)}
       className='formulario'>
       <span>
         {id ? "Atualizar usuário" :
@@ -170,11 +145,6 @@ export const Formulario = ({ usuario, id }) => {
           id='telefone'
           placeholder={usuario ? usuario.telefone : "Telefone"}
           name="telefone" />
-
-      </div>
-      <div className='grupo_formulario'>
-        <input onChange={(event => setFile(event.target.files[0]))}
-          type="file" placeholder={usuario ? usuario.imageUrl : "imageUrl"} name="imageUrl" />
 
       </div>
       <div className='grupo_formulario'>

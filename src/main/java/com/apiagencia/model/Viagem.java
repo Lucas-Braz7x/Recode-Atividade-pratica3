@@ -24,6 +24,6 @@ public class Viagem {
 	private float preco;
 	
 	@Column(nullable=false)
-	private int taxas;
+	private float taxas;
 	
 }

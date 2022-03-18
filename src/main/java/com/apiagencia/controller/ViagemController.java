@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.apiagencia.error.ErrorAuth;
 import com.apiagencia.model.Viagem;
 import com.apiagencia.repository.ViagemRepository;
 
@@ -44,14 +45,23 @@ public class ViagemController {
 	
 	@PostMapping
 	public Viagem CreateUser(@RequestBody @Validated Viagem viagem) {
+		boolean existsViagem = viagemRepository.existsByDestinoViagem(viagem.getDestinoViagem());
+		if(existsViagem) {
+			throw new Error("Destino já cadastrado");
+		}
+		
 		return viagemRepository.save(viagem);
 	}
 	
 	@PatchMapping(value="{id}")
 	public Viagem UpdateUser(@PathVariable int id, @RequestBody @Validated Viagem viagem) {
 		Viagem viagemExistente = viagemRepository.getOne(id);
+		boolean existsViagem = viagemRepository.existsByDestinoViagem(viagem.getDestinoViagem());
 		
 		if(viagem.getDestinoViagem()!= null) {
+			if(existsViagem) {
+				throw new ErrorAuth("Destino já cadastrado");
+			}
 			viagemExistente.setDestinoViagem(viagem.getDestinoViagem());
 		}
 		if(viagem.getPreco()!= 0) {

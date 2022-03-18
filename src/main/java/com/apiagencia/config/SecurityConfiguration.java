@@ -56,6 +56,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.csrf().disable().authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/usuario").permitAll()
 				.antMatchers(HttpMethod.POST, "/usuario/login").permitAll()
+				.antMatchers(HttpMethod.GET, "/usuario").permitAll()
+				.antMatchers(HttpMethod.GET, "/passagem").permitAll()
+				.antMatchers(HttpMethod.GET, "/viagem").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//Evita cookie e sempre precisa da autenticação

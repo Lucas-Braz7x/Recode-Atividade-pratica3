@@ -1,12 +1,19 @@
 package com.apiagencia.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.annotation.MultipartConfig;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +23,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.apiagencia.error.ErrorAuth;
 import com.apiagencia.model.Usuario;
@@ -54,7 +65,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping
-	public Usuario CreateUser(@RequestBody @Validated Usuario usuario) {
+	public Usuario createUser(@RequestBody @Validated Usuario usuario) {
 		boolean existEmail = usuarioRepository.existsByEmail(usuario.getEmail());
 		boolean existCpf = usuarioRepository.existsByCpf(usuario.getCpf());
 		if(existEmail) {
@@ -92,7 +103,7 @@ public class UsuarioController {
 	
 	
 	@PatchMapping(value ="{id}")
-	public Usuario UpdateUser(
+	public Usuario updateUser(
 			@PathVariable int id, 
 			@RequestBody @Validated Usuario usuario, 
 			@RequestHeader("Authorization") String authorizationToken) {
@@ -138,7 +149,7 @@ public class UsuarioController {
 	}
 	
 	@DeleteMapping(value ="{id}")
-	public void DeleteUser(
+	public void deleteUser(
 			@PathVariable int id,
 			@RequestHeader("Authorization") String authorizationToken) {
 		
@@ -191,5 +202,6 @@ public class UsuarioController {
 		
 		return false;
 	}
+	
 	
 }

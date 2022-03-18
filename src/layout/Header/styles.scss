@@ -83,15 +83,8 @@
 }
 
 @media (max-width: 800px) {
-  .navegacao ul{
-
-    gap: 25px;
-  }
-
-  .navegacao{
-    display: flex;
-    justify-content: flex-end;
-
+  .logo{
+    display: none;
   }
 }
 
